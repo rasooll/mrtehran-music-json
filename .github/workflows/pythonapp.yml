@@ -26,7 +26,13 @@ jobs:
       run: |
         python app.py
         cat _deploy/featured.json
-    - name: Deploy updated featured.json
+    - name: Commit files
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add _deploy/*
+        git commit -m "Deploy changes"
+    - name: Deploy changes
       uses: ad-m/github-push-action@master
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
