@@ -4,8 +4,6 @@
 name: Python application
 
 on:
-  push:
-    branches: master
   schedule:
     - cron: '*/30 * * * *'
 
@@ -25,7 +23,6 @@ jobs:
     - name: "Update featured.json"
       run: |
         python app.py
-        cat _deploy/featured.json
     - name: Commit files
       run: |
         git config --local user.email "action@github.com"
@@ -36,7 +33,7 @@ jobs:
       uses: ad-m/github-push-action@master
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        branch: featured
+        branch: master
         force: true
         directory: _deploy
 
