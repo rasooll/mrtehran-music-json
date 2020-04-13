@@ -25,7 +25,7 @@ jobs:
     - name: "Update featured.json"
       run: |
         python app.py
-        cat featured.json
+        cat _deploy/featured.json
     - name: Deploy updated featured.json
       uses: ad-m/github-push-action@master
       with:
