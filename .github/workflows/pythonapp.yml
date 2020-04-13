@@ -24,8 +24,9 @@ jobs:
       run: |
         python app.py
     - name: Deploy updated featured.json
-      uses: tcitry/push-to-master@v1.0
+      uses: ad-m/github-push-action@master
       with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
         branch: featured
 
     
