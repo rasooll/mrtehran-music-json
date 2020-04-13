@@ -32,5 +32,6 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         branch: featured
         force: true
+        directory: _deploy
 
     

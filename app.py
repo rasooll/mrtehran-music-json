@@ -23,5 +23,5 @@ def get_featured(pages=1):
 
     return musics
 
-with open('featured.json', 'w') as featured:
+with open('_deploy/featured.json', 'w') as featured:
     featured.write(json.dumps(get_featured(), indent=2))
