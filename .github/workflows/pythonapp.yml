@@ -23,6 +23,7 @@ jobs:
     - name: "Update featured.json"
       run: |
         python app.py
+        echo `date` > _deploy/last_update
     - name: Commit files
       run: |
         git config --local user.email "action@github.com"
