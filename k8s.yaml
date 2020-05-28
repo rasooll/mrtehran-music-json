@@ -1,0 +1,75 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+  labels:
+    app: mrtehran
+  name: mrtehran
+spec:
+  selector:
+    matchLabels:
+      app: mrtehran
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mrtehran
+    spec:
+      containers:
+      - image: "rasooll/mrtehran-music-json:latest"
+        env:
+        - name: url
+          value: http://mrtehran-rasooll.apps.ir-thr-at1.arvan.run       
+        imagePullPolicy: IfNotPresent
+        name: mrtehran
+        ports:
+        - containerPort: 80
+          protocol: TCP
+        resources:
+          limits:
+            cpu: '15m'
+            ephemeral-storage: 10M
+            memory: 50M
+          requests:
+            cpu: '10m'
+            ephemeral-storage: 10M
+            memory: 25M
+    dnsPolicy: ClusterFirst
+    restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: mrtehran
+  name: mrtehran-service
+spec:
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: mrtehran
+  type: ClusterIP
+---
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: mrtehran
+  labels:
+    app: mrtehran-route
+  annotations:
+spec:
+  host: mrtehran-rasooll.apps.ir-thr-at1.arvan.run
+  port:
+    targetPort: http
+  tls:
+    insecureEdgeTerminationPolicy: Allow
+    termination: edge
+  to:
+    kind: Service
+    name: mrtehran-service
+    weight: 100
+  wildcardPolicy: None
